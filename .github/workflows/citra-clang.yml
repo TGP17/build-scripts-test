@@ -19,5 +19,12 @@ jobs:
     - name: Fetch submodules
       run: git submodule update --init --recursive
 
-    - name: Install misc packages
+    - name: citra-clang.sh
       run: chmod a+x ./citra-clang.sh && ./citra-clang.sh
+    - name: Pack
+      run: ./.ci/pack.sh
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+         name: ${{ env.OS }}-${{ env.TARGET }}
+         path: artifacts/
