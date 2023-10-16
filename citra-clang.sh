@@ -10,7 +10,7 @@ sudo apt-get install -y \
     cpp-11 \
     clang-15
     clang-format \
-    libc++-dev \
+    libc++-15-dev \
     qt6-base-dev \
     qt6-base-private-dev \
     qt6-multimedia-dev \
