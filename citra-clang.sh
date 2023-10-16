@@ -37,3 +37,7 @@ sudo apt-get install -y \
     glslang-dev \
     glslang-tools \
     file
+
+git clone --recursive https://github.com/citra-emu/citra
+mkdir build
+cd build
