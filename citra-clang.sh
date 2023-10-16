@@ -55,6 +55,3 @@ cmake .. -G Ninja \
     -DUSE_DISCORD_PRESENCE=ON
 ninja
 ninja bundle
-
-mkdir artifacts/
-mv ./bundle/* artifacts/
