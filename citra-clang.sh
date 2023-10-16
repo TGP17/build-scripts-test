@@ -50,7 +50,6 @@ cmake .. -G Ninja \
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
     -DCMAKE_CXX_COMPILER=clang++-15 \
     -DCMAKE_C_COMPILER=clang-15 \
-    -DCMAKE_CXX_FLAGS="-O2 -g -stdlib=libc++" \
     -DCMAKE_C_FLAGS="-fuse-ld=lld" \
     -DCMAKE_CXX_FLAGS="-fuse-ld=lld" \
     -DCITRA_ENABLE_COMPATIBILITY_REPORTING=ON \
