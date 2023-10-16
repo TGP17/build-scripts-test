@@ -8,9 +8,6 @@ sudo apt-get install -y \
     gcc-11 \
     g++-11 \
     cpp-11 \
-    clang-15 \
-    clang-format-15 \
-    libc++-15-dev \
     qt6-base-dev \
     qt6-base-private-dev \
     qt6-multimedia-dev \
@@ -37,6 +34,10 @@ sudo apt-get install -y \
     glslang-dev \
     glslang-tools \
     file
+
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 15
 
 git clone --recursive https://github.com/citra-emu/citra
 cd citra
