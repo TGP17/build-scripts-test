@@ -38,7 +38,6 @@ sudo apt-get install -y \
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 sudo ./llvm.sh 15 all
-lld --version
 
 git clone --recursive https://github.com/citra-emu/citra
 cd citra
@@ -50,7 +49,6 @@ cmake .. -G Ninja \
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
     -DCMAKE_CXX_COMPILER=clang++-15 \
     -DCMAKE_C_COMPILER=clang-15 \
-    -DCMAKE_CXX_FLAGS="-O2 -g -stdlib=libc++" \
     -DCMAKE_LINKER=/etc/bin/ld.lld \
     -DCITRA_ENABLE_COMPATIBILITY_REPORTING=ON \
     -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
