@@ -8,7 +8,6 @@ sudo apt-get install -y \
     clang \
     clang-format \
     libc++-dev \
-# Qt 6
     qt6-base-dev \
     qt6-base-private-dev \
     qt6-multimedia-dev \
@@ -18,7 +17,6 @@ sudo apt-get install -y \
     qt6-gtk-platformtheme \
     qt6-documentation-tools \
     qt6-wayland \
-# FFmpeg
     ffmpeg \
     libavcodec-dev \
     libavdevice-dev \
@@ -26,7 +24,6 @@ sudo apt-get install -y \
     libavformat-dev \
     libswresample-dev \
     libswscale-dev \
-# Tools
     cmake \
     p7zip-full \
     wget \
