@@ -54,3 +54,4 @@ cmake .. -G Ninja \
     -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
     -DUSE_DISCORD_PRESENCE=ON
 ninja
+ninja bundle
