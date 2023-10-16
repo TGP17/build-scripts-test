@@ -1,5 +1,6 @@
 sudo apt-get update
 sudo apt-get upgrade -y
+sudo add-apt-repository -y ppa:theofficialgman/gpu-tools
 sudo apt-get install -y \
     build-essential \
     libsdl2-dev \
