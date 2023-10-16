@@ -38,6 +38,7 @@ sudo apt-get install -y \
     file
 
 git clone --recursive https://github.com/citra-emu/citra
+cd citra
 mkdir build
 cd build
 cmake .. -G Ninja \
