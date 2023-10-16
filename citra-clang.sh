@@ -56,32 +56,5 @@ cmake .. -G Ninja \
 ninja
 ninja bundle
 
-# Archive and upload the artifacts.
-mkdir artifacts
-
-function pack_artifacts() {
-    ARTIFACTS_PATH="$1"
-
-    # Set up root directory for archive.
-    mkdir "$REV_NAME"
-    if [ -f "$ARTIFACTS_PATH" ]; then
-        mv "$ARTIFACTS_PATH" "$REV_NAME"
-
-        # Use file extension to differentiate archives.
-        FILENAME=$(basename "$ARTIFACT")
-        EXTENSION="${FILENAME##*.}"
-        ARCHIVE_NAME="$REV_NAME.$EXTENSION"
-    else
-        mv "$ARTIFACTS_PATH"/* "$REV_NAME"
-
-        ARCHIVE_NAME="$REV_NAME"
-    fi
-if [ -z "$PACK_INDIVIDUALLY" ]; then
-    # Pack all of the artifacts at once.
-    pack_artifacts build/bundle
-else
-    # Pack and upload the artifacts one-by-one.
-    for ARTIFACT in build/bundle/*; do
-        pack_artifacts "$ARTIFACT"
-    done
-fi
+mkdir artifacts/
+mv ./bundle/* artifacts/
