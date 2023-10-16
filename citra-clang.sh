@@ -8,6 +8,7 @@ sudo apt-get install -y \
     gcc-11 \
     g++-11 \
     cpp-11 \
+    lld-15 \
     qt6-base-dev \
     qt6-base-private-dev \
     qt6-multimedia-dev \
