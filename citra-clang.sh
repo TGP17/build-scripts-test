@@ -8,7 +8,7 @@ sudo apt-get install -y \
     gcc-11 \
     g++-11 \
     cpp-11 \
-    clang-15
+    clang-15 \
     clang-format-15 \
     libc++-15-dev \
     qt6-base-dev \
