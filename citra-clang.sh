@@ -6,6 +6,8 @@ sudo apt-get install -y \
     g++-11 \
     cpp-11 \
     clang \
+    clang-format \
+    libc++-dev \
 # Qt 6
     qt6-base-dev \
     qt6-base-private-dev \
