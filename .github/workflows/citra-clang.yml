@@ -21,8 +21,6 @@ jobs:
 
     - name: citra-clang.sh
       run: chmod a+x ./citra-clang.sh && ./citra-clang.sh
-    - name: Pack
-      run: ./citra/.ci/pack.sh
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
