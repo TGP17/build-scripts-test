@@ -22,7 +22,7 @@ jobs:
     - name: citra-clang.sh
       run: chmod a+x ./citra-clang.sh && ./citra-clang.sh
     - name: Upload
-         uses: actions/upload-artifact@v3
-         with:
-          name: citra-qt
-          path: ./citra/build/bundle/citra-qt.AppImage
+      uses: actions/upload-artifact@v3
+      with:
+       name: citra-qt
+       path: ./citra/build/bundle/citra-qt.AppImage
