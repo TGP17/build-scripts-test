@@ -37,7 +37,7 @@ sudo apt-get install -y \
 
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
-sudo ./llvm.sh 15
+sudo ./llvm.sh all 15
 
 git clone --recursive https://github.com/citra-emu/citra
 cd citra
