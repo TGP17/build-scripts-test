@@ -46,8 +46,8 @@ cmake .. -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_C_COMPILER_LAUNCHER=ccache \
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
-    -DCMAKE_CXX_COMPILER=clang++ \
-    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++-15 \
+    -DCMAKE_C_COMPILER=clang-15 \
     -DCMAKE_CXX_FLAGS="-O2 -g -stdlib=libc++"
     -DENABLE_QT_TRANSLATION=ON \
     -DCITRA_ENABLE_COMPATIBILITY_REPORTING=ON \
