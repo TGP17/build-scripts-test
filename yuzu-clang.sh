@@ -1,11 +1,8 @@
-export BOOST_VER=1_79_0
-export CLANG_VER=15
-export CMAKE_VER=3.22.6
-export GCC_VER=12.2.0
-export GNU_BIN_VER=2.40
-export QT_PKG_VER=515
-export QT_VER=5.15.2
-export UBUNTU_VER=focal
+sudo add-apt-repository -y ppa:savoury1/graphics
+sudo add-apt-repository -y ppa:savoury1/multimedia
+sudo add-apt-repository -y ppa:savoury1/ffmpeg4
+sudo add-apt-repository -y ppa:git-core/ppa
+sudo add-apt-repository -y ppa:theofficialgman/gpu-tools
 
 sudo apt-get update && \
    sudo apt-get full-upgrade -y && \
@@ -47,104 +44,18 @@ sudo apt-get update && \
     libudev-dev \
     gpg-agent \
     curl \
-    zip
-    
-# Install updated versions of glslang, git, and Qt from launchpad repositories
-   sudo add-apt-repository -y ppa:beineri/opt-qt-${QT_VER}-${UBUNTU_VER}
-   sudo add-apt-repository -y ppa:savoury1/graphics
-   sudo add-apt-repository -y ppa:savoury1/multimedia
-   sudo add-apt-repository -y ppa:savoury1/ffmpeg4
-   sudo add-apt-repository -y ppa:git-core/ppa
-   sudo apt-get update -y
-   sudo apt-get install --no-install-recommends -y \
     git \
     glslang-dev \
     glslang-tools \
     libhidapi-dev \
-    qt${QT_PKG_VER}base \
-    qt${QT_PKG_VER}tools \
-    qt${QT_PKG_VER}wayland \
-    qt${QT_PKG_VER}multimedia \
-    qt${QT_PKG_VER}x11extras
+    zip
     
 # Install Clang from apt.llvm.org
-    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    echo "deb http://apt.llvm.org/${UBUNTU_VER}/ llvm-toolchain-${UBUNTU_VER}-${CLANG_VER} main" >> /etc/apt/sources.list && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends -y \
-    clang-${CLANG_VER} \
-    lld-${CLANG_VER} \
-    llvm-${CLANG_VER} \
-    llvm-${CLANG_VER}-linker-tools && \
-    ln -s $(which clang-${CLANG_VER}) /usr/bin/clang && \
-    ln -s $(which clang++-${CLANG_VER}) /usr/bin/clang++ && \
-    dpkg-reconfigure ccache && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 15 all
 
-# Install CMake from upstream
-cd /tmp && \
-    wget --no-verbose https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
-    tar xvf cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
-    sudo cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
-    rm -rf cmake-*
-
-# Install Boost from yuzu-emu/ext-linux-bin
-cd /tmp && \
-    wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
-    tar xvf boost-${BOOST_VER}.tar.xz && \
-    chown -R root:root boost-${BOOST_VER}/ && \
-    sudo cp -rv boost-${BOOST_VER}/usr / && \
-    rm -rf boost*
-
-# Install GCC from yuzu-emu/ext-linux-bin
-cd /tmp && \
-    wget --no-verbose \
-        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.aa \
-        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ab \
-        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ac \
-        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ad && \
-    cat gcc-${GCC_VER}-ubuntu.tar.xz.* | tar xJ && \
-    sudo cp -rv gcc-${GCC_VER}/usr / && \
-    rm -rf /tmp/gcc*
-    
-# Use updated libstdc++ and libgcc_s on the container from GCC 11
-    sudo rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
-    sudo ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
-    sudo ln -sv /usr/local/lib64/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
-    
-# Help Clang find the updated GCC C++ version
-    sudo ln -sv /usr/local/include/c++/${GCC_VER}/ /usr/include/c++/${GCC_VER} && \
-    sudo ln -sv /usr/local/lib/gcc/x86_64-pc-linux-gnu/${GCC_VER} /usr/lib/gcc/x86_64-linux-gnu/${GCC_VER} && \
-    sudo cp -rv /usr/local/include/c++/${GCC_VER}/x86_64-pc-linux-gnu/* /usr/local/include/c++/${GCC_VER}/
-
-# Install GNU binutils from yuzu-emu/ext-linux-bin
-cd /tmp && \
-    wget --no-verbose \
-        https://github.com/yuzu-emu/ext-linux-bin/raw/main/binutils/binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
-    tar xf binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
-    sudo cp -rv binutils-${GNU_BIN_VER}-${UBUNTU_VER}/usr / && \
-    rm -rf /tmp/binutils*
-
-# Setup paths for Qt binaries
-export LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
-export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
-
-# Tell CMake to use vcpkg when looking for packages
-export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
-
-# Install vcpkg and required dependencies for yuzu
-#git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
- #   cd vcpkg &&\
-  #  ./bootstrap-vcpkg.sh &&\
-   # ./vcpkg install \
-    #    catch2 \
-     #   fmt \
-   #  lz4 \
-    #    nlohmann-json \
-     #   zlib \
-      #  zstd
+# Compile yuzu
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
 cd yuzu-mainline
 mkdir build || true && cd build
@@ -152,8 +63,8 @@ cmake .. \
       -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
       -DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
-      -DCMAKE_CXX_COMPILER=clang++ \
-      -DCMAKE_C_COMPILER=clang \
+      -DCMAKE_CXX_COMPILER=clang++-15 \
+      -DCMAKE_C_COMPILER=clang-15 \
       -DCMAKE_INSTALL_PREFIX="/usr" \
       -DDISPLAY_VERSION=$1 \
       -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
