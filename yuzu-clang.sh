@@ -1,11 +1,10 @@
-ENV BOOST_VER=1_79_0
-ENV CMAKE_VER=3.22.6
-ENV DEBIAN_FRONTEND=noninteractive
-ENV GCC_VER=12.2.0
-ENV GNU_BIN_VER=2.40
-ENV QT_PKG_VER=515
-ENV QT_VER=5.15.2
-ENV UBUNTU_VER=focal
+export BOOST_VER=1_79_0
+export CMAKE_VER=3.22.6
+export GCC_VER=12.2.0
+export GNU_BIN_VER=2.40
+export QT_PKG_VER=515
+export QT_VER=5.15.2
+export UBUNTU_VER=focal
 
 sudo apt-get update && \
    sudo apt-get full-upgrade -y && \
@@ -115,8 +114,8 @@ sudo cd /tmp && \
     rm -rf /tmp/binutils*
 
 # Setup paths for Qt binaries
-ENV LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
-ENV PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
+export LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
+export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 
 # Fix GCC 11 <-> Qt 5.15 issue
 COPY qtconcurrentthreadengine.patch /opt/qt515/qtconcurrentthreadengine.patch
@@ -124,7 +123,7 @@ sudo patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515
     rm /opt/qt515/qtconcurrentthreadengine.patch
 
 # Tell CMake to use vcpkg when looking for packages
-ENV VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
+export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Install vcpkg and required dependencies for yuzu
 sudo cd /home/yuzu &&\
