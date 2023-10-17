@@ -1,5 +1,10 @@
 sudo apt-get update
 sudo apt-get upgrade -y
+sudo add-apt-repository -y ppa:savoury1/build-tools
+sudo add-apt-repository -y ppa:savoury1/display
+sudo add-apt-repository -y ppa:savoury1/ffmpeg4
+sudo add-apt-repository -y ppa:savoury1/gcc-defaults-11
+sudo add-apt-repository -y ppa:savoury1/qt-6-2
 sudo add-apt-repository -y ppa:theofficialgman/gpu-tools
 sudo apt-get install -y \
     build-essential \
