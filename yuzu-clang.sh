@@ -121,13 +121,13 @@ export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Install vcpkg and required dependencies for yuzu
-git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
-    cd vcpkg &&\
-    ./bootstrap-vcpkg.sh &&\
-    ./vcpkg install \
-        catch2 \
-        fmt \
-        lz4 \
-        nlohmann-json \
-        zlib \
-        zstd
+#git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
+ #   cd vcpkg &&\
+  #  ./bootstrap-vcpkg.sh &&\
+   # ./vcpkg install \
+    #    catch2 \
+     #   fmt \
+   #  lz4 \
+    #    nlohmann-json \
+     #   zlib \
+      #  zstd
