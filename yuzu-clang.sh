@@ -74,6 +74,24 @@ cd /tmp && \
     sudo cp -rv boost-${BOOST_VER}/usr / && \
     rm -rf boost*
 
+# Use updated libstdc++ and libgcc_s on the container from GCC 11
+    sudo rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
+    sudo ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
+    sudo ln -sv /usr/local/lib64/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
+    
+# Help Clang find the updated GCC C++ version
+    sudo ln -sv /usr/local/include/c++/${GCC_VER}/ /usr/include/c++/${GCC_VER} && \
+    sudo ln -sv /usr/local/lib/gcc/x86_64-pc-linux-gnu/${GCC_VER} /usr/lib/gcc/x86_64-linux-gnu/${GCC_VER} && \
+    sudo cp -rv /usr/local/include/c++/${GCC_VER}/x86_64-pc-linux-gnu/* /usr/local/include/c++/${GCC_VER}/
+
+# Install GNU binutils from yuzu-emu/ext-linux-bin
+cd /tmp && \
+    wget --no-verbose \
+        https://github.com/yuzu-emu/ext-linux-bin/raw/main/binutils/binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
+    tar xf binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
+    sudo cp -rv binutils-${GNU_BIN_VER}-${UBUNTU_VER}/usr / && \
+    rm -rf /tmp/binutils*
+
 # Install vcpkg and required dependencies for yuzu
 git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
     cd vcpkg &&\
