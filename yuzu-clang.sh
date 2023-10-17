@@ -74,6 +74,17 @@ cd /tmp && \
     sudo cp -rv boost-${BOOST_VER}/usr / && \
     rm -rf boost*
 
+# Install GCC from yuzu-emu/ext-linux-bin
+cd /tmp && \
+    wget --no-verbose \
+        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.aa \
+        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ab \
+        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ac \
+        https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ad && \
+    cat gcc-${GCC_VER}-ubuntu.tar.xz.* | tar xJ && \
+    sudo cp -rv gcc-${GCC_VER}/usr / && \
+    rm -rf /tmp/gcc*
+
 # Use updated libstdc++ and libgcc_s on the container from GCC 11
     sudo rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
     sudo ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
