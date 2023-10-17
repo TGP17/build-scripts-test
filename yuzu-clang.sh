@@ -117,11 +117,6 @@ cd /tmp && \
 export LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
 export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 
-# Fix GCC 11 <-> Qt 5.15 issue
-sudo cp qtconcurrentthreadengine.patch /opt/qt515/qtconcurrentthreadengine.patch
-sudo patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515/qtconcurrentthreadengine.patch && \
-    rm /opt/qt515/qtconcurrentthreadengine.patch
-
 # Tell CMake to use vcpkg when looking for packages
 export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
