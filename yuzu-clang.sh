@@ -51,6 +51,7 @@ sudo apt-get install -y \
     glslang-dev \
     glslang-tools \
     libhidapi-dev \
+    libfmt-dev \
     zip
     
 # Install Clang from apt.llvm.org
