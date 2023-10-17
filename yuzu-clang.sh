@@ -102,7 +102,7 @@ git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
         zstd
         
 # Tell CMake to use vcpkg when looking for packages
-export VCPKG_TOOLCHAIN_FILE=./scripts/buildsystems/vcpkg.cmake
+export VCPKG_TOOLCHAIN_FILE=/tmp/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Compile yuzu
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
