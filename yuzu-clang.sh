@@ -8,8 +8,8 @@ ENV QT_VER=5.15.2
 ENV UBUNTU_VER=focal
 
 sudo apt-get update && \
-    apt-get full-upgrade -y && \
-    apt-get install --no-install-recommends -y \
+   sudo apt-get full-upgrade -y && \
+   sudo apt-get install --no-install-recommends -y \
     apt-utils \
     ca-certificates \
     gnupg \
