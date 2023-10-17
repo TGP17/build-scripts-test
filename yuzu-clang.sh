@@ -75,7 +75,7 @@ sudo ./llvm.sh 15 all
 cd /tmp && \
     wget --no-verbose https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
     tar xvf cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
-    cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
+    sudo cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
     rm -rf cmake-*
 
 # Install Boost from yuzu-emu/ext-linux-bin
@@ -83,7 +83,7 @@ cd /tmp && \
     wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
     tar xvf boost-${BOOST_VER}.tar.xz && \
     chown -R root:root boost-${BOOST_VER}/ && \
-    cp -rv boost-${BOOST_VER}/usr / && \
+    sudo cp -rv boost-${BOOST_VER}/usr / && \
     rm -rf boost*
 
 # Install GCC from yuzu-emu/ext-linux-bin
@@ -94,7 +94,7 @@ cd /tmp && \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ac \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ad && \
     cat gcc-${GCC_VER}-ubuntu.tar.xz.* | tar xJ && \
-    cp -rv gcc-${GCC_VER}/usr / && \
+    sudo cp -rv gcc-${GCC_VER}/usr / && \
     rm -rf /tmp/gcc* && \
 # Use updated libstdc++ and libgcc_s on the container from GCC 11
     rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
@@ -110,7 +110,7 @@ cd /tmp && \
     wget --no-verbose \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/binutils/binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
     tar xf binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
-    cp -rv binutils-${GNU_BIN_VER}-${UBUNTU_VER}/usr / && \
+    sudo cp -rv binutils-${GNU_BIN_VER}-${UBUNTU_VER}/usr / && \
     rm -rf /tmp/binutils*
 
 # Setup paths for Qt binaries
@@ -118,7 +118,7 @@ export LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
 export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 
 # Fix GCC 11 <-> Qt 5.15 issue
-cp qtconcurrentthreadengine.patch /opt/qt515/qtconcurrentthreadengine.patch
+sudo cp qtconcurrentthreadengine.patch /opt/qt515/qtconcurrentthreadengine.patch
 sudo patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515/qtconcurrentthreadengine.patch && \
     rm /opt/qt515/qtconcurrentthreadengine.patch
 
