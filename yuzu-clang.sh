@@ -72,14 +72,14 @@ chmod +x llvm.sh
 sudo ./llvm.sh 15 all
 
 # Install CMake from upstream
-sudo cd /tmp && \
+cd /tmp && \
     wget --no-verbose https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
     tar xvf cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
     cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
     rm -rf cmake-*
 
 # Install Boost from yuzu-emu/ext-linux-bin
-sudo cd /tmp && \
+cd /tmp && \
     wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
     tar xvf boost-${BOOST_VER}.tar.xz && \
     chown -R root:root boost-${BOOST_VER}/ && \
@@ -87,7 +87,7 @@ sudo cd /tmp && \
     rm -rf boost*
 
 # Install GCC from yuzu-emu/ext-linux-bin
-sudo cd /tmp && \
+cd /tmp && \
     wget --no-verbose \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.aa \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ab \
@@ -106,7 +106,7 @@ sudo cd /tmp && \
     cp -rv /usr/local/include/c++/${GCC_VER}/x86_64-pc-linux-gnu/* /usr/local/include/c++/${GCC_VER}/
 
 # Install GNU binutils from yuzu-emu/ext-linux-bin
-sudo cd /tmp && \
+cd /tmp && \
     wget --no-verbose \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/binutils/binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
     tar xf binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
@@ -126,7 +126,7 @@ sudo patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515
 export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Install vcpkg and required dependencies for yuzu
-sudo cd /home/yuzu &&\
+cd /home/yuzu &&\
     git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
     cd vcpkg &&\
     ./bootstrap-vcpkg.sh &&\
