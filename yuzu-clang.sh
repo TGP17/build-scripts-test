@@ -98,8 +98,8 @@ cd /tmp && \
     rm -rf /tmp/gcc* && \
 # Use updated libstdc++ and libgcc_s on the container from GCC 11
     sudo rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
-    ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
-    ln -sv /usr/local/lib64/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
+    sudo ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
+    sudo ln -sv /usr/local/lib64/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
 # Help Clang find the updated GCC C++ version
     ln -sv /usr/local/include/c++/${GCC_VER}/ /usr/include/c++/${GCC_VER} && \
     ln -sv /usr/local/lib/gcc/x86_64-pc-linux-gnu/${GCC_VER} /usr/lib/gcc/x86_64-linux-gnu/${GCC_VER} && \
