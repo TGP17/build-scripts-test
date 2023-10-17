@@ -58,6 +58,14 @@ wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 sudo ./llvm.sh 15 all
 
+# Install Boost from yuzu-emu/ext-linux-bin
+export BOOST_VER=1_79_0
+cd /tmp && \
+    wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
+    tar xvf boost-${BOOST_VER}.tar.xz && \
+    sudo cp -rv boost-${BOOST_VER}/usr / && \
+    rm -rf boost*
+
 # Compile yuzu
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
 cd yuzu-mainline
