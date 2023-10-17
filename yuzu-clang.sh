@@ -1,3 +1,12 @@
+export BOOST_VER=1_79_0
+export CLANG_VER=15
+export CMAKE_VER=3.22.6
+export GCC_VER=12.2.0
+export GNU_BIN_VER=2.40
+export QT_PKG_VER=515
+export QT_VER=5.15.2
+export UBUNTU_VER=focal
+
 sudo add-apt-repository -y ppa:savoury1/build-tools
 sudo add-apt-repository -y ppa:savoury1/display
 sudo add-apt-repository -y ppa:savoury1/ffmpeg4
@@ -59,12 +68,23 @@ chmod +x llvm.sh
 sudo ./llvm.sh 15 all
 
 # Install Boost from yuzu-emu/ext-linux-bin
-export BOOST_VER=1_79_0
 cd /tmp && \
     wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
     tar xvf boost-${BOOST_VER}.tar.xz && \
     sudo cp -rv boost-${BOOST_VER}/usr / && \
     rm -rf boost*
+
+# Install vcpkg and required dependencies for yuzu
+git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
+    cd vcpkg &&\
+    ./bootstrap-vcpkg.sh &&\
+    ./vcpkg install \
+        catch2 \
+        fmt \
+     lz4 \
+        nlohmann-json \
+        zlib \
+        zstd
 
 # Compile yuzu
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
