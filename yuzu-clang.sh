@@ -72,6 +72,8 @@ sudo apt-get install -y \
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 sudo ./llvm.sh 15 all
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 150
+sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 150
 
 # Install CMake from upstream
 cd /tmp && \
@@ -110,8 +112,8 @@ cmake .. \
       -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
       -DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
-      -DCMAKE_CXX_COMPILER=clang++-15 \
-      -DCMAKE_C_COMPILER=clang-15 \
+      -DCMAKE_CXX_COMPILER=clang++ \
+      -DCMAKE_C_COMPILER=clang \
       -DCMAKE_INSTALL_PREFIX="/usr" \
       -DDISPLAY_VERSION=$1 \
       -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
