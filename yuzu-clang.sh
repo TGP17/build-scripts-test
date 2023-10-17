@@ -69,20 +69,9 @@ sudo apt-get install -y \
     zip
     
 # Install Clang from apt.llvm.org
-    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    echo "deb http://apt.llvm.org/${UBUNTU_VER}/ llvm-toolchain-${UBUNTU_VER}-${CLANG_VER} main" >> /etc/apt/sources.list && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends -y \
-    clang-${CLANG_VER} \
-    lld-${CLANG_VER} \
-    llvm-${CLANG_VER} \
-    llvm-${CLANG_VER}-linker-tools && \
-    ln -s $(which clang-${CLANG_VER}) /usr/bin/clang && \
-    ln -s $(which clang++-${CLANG_VER}) /usr/bin/clang++ && \
-    dpkg-reconfigure ccache && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 15 all
 
 # Install CMake from upstream
 cd /tmp && \
