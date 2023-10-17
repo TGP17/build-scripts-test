@@ -1,4 +1,13 @@
-apt-get update && \
+ENV BOOST_VER=1_79_0
+ENV CMAKE_VER=3.22.6
+ENV DEBIAN_FRONTEND=noninteractive
+ENV GCC_VER=12.2.0
+ENV GNU_BIN_VER=2.40
+ENV QT_PKG_VER=515
+ENV QT_VER=5.15.2
+ENV UBUNTU_VER=focal
+
+sudo apt-get update && \
     apt-get full-upgrade -y && \
     apt-get install --no-install-recommends -y \
     apt-utils \
@@ -8,7 +17,6 @@ apt-get update && \
     unzip \
     wget \
     xz-utils \
-# yuzu build requirements
     build-essential \
     ccache \
     git \
@@ -22,38 +30,33 @@ apt-get update && \
     ninja-build \
     pkg-config \
     zlib1g-dev \
-# AppImage support
     appstream \
     desktop-file-utils \
     file \
     libfile-mimeinfo-perl \
     patchelf \
     zsync \
-# FFmpeg build requirements
     libdrm-dev \
     libva-dev \
     libx11-dev \
     libxext-dev \
     nasm \
-# libusb build requirements
     autoconf \
     automake \
     libtool \
     libudev-dev \
-# apt.llvm.org Clang requirements
     gpg-agent \
-# vcpkg requirements
     curl \
-    zip \
-    && \
+    zip
+    
 # Install updated versions of glslang, git, and Qt from launchpad repositories
-    add-apt-repository -y ppa:beineri/opt-qt-${QT_VER}-${UBUNTU_VER} && \
-    add-apt-repository -y ppa:savoury1/graphics && \
-    add-apt-repository -y ppa:savoury1/multimedia && \
-    add-apt-repository -y ppa:savoury1/ffmpeg4 && \
-    add-apt-repository -y ppa:git-core/ppa && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends -y \
+   sudo add-apt-repository -y ppa:beineri/opt-qt-${QT_VER}-${UBUNTU_VER}
+   sudo add-apt-repository -y ppa:savoury1/graphics
+   sudo add-apt-repository -y ppa:savoury1/multimedia
+   sudo add-apt-repository -y ppa:savoury1/ffmpeg4
+   sudo add-apt-repository -y ppa:git-core/ppa
+   sudo apt-get update -y
+   sudo apt-get install --no-install-recommends -y \
     git \
     glslang-dev \
     glslang-tools \
@@ -62,32 +65,22 @@ apt-get update && \
     qt${QT_PKG_VER}tools \
     qt${QT_PKG_VER}wayland \
     qt${QT_PKG_VER}multimedia \
-    qt${QT_PKG_VER}x11extras && \
+    qt${QT_PKG_VER}x11extras
+    
 # Install Clang from apt.llvm.org
-    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
-    echo "deb http://apt.llvm.org/${UBUNTU_VER}/ llvm-toolchain-${UBUNTU_VER}-${CLANG_VER} main" >> /etc/apt/sources.list && \
-    apt-get update -y && \
-    apt-get install --no-install-recommends -y \
-    clang-${CLANG_VER} \
-    lld-${CLANG_VER} \
-    llvm-${CLANG_VER} \
-    llvm-${CLANG_VER}-linker-tools && \
-    ln -s $(which clang-${CLANG_VER}) /usr/bin/clang && \
-    ln -s $(which clang++-${CLANG_VER}) /usr/bin/clang++ && \
-    dpkg-reconfigure ccache && \
-    apt-get clean autoclean && \
-    apt-get autoremove --yes && \
-    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 15 all
 
 # Install CMake from upstream
-RUN cd /tmp && \
+sudo cd /tmp && \
     wget --no-verbose https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
     tar xvf cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
     cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
     rm -rf cmake-*
 
 # Install Boost from yuzu-emu/ext-linux-bin
-RUN cd /tmp && \
+sudo cd /tmp && \
     wget --no-verbose https://github.com/yuzu-emu/ext-linux-bin/raw/main/boost/boost-${BOOST_VER}.tar.xz && \
     tar xvf boost-${BOOST_VER}.tar.xz && \
     chown -R root:root boost-${BOOST_VER}/ && \
@@ -95,7 +88,7 @@ RUN cd /tmp && \
     rm -rf boost*
 
 # Install GCC from yuzu-emu/ext-linux-bin
-RUN cd /tmp && \
+sudo cd /tmp && \
     wget --no-verbose \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.aa \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/gcc/gcc-${GCC_VER}-ubuntu.tar.xz.ab \
@@ -114,7 +107,7 @@ RUN cd /tmp && \
     cp -rv /usr/local/include/c++/${GCC_VER}/x86_64-pc-linux-gnu/* /usr/local/include/c++/${GCC_VER}/
 
 # Install GNU binutils from yuzu-emu/ext-linux-bin
-RUN cd /tmp && \
+sudo cd /tmp && \
     wget --no-verbose \
         https://github.com/yuzu-emu/ext-linux-bin/raw/main/binutils/binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
     tar xf binutils-${GNU_BIN_VER}-${UBUNTU_VER}.tar.xz && \
@@ -127,15 +120,14 @@ ENV PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 
 # Fix GCC 11 <-> Qt 5.15 issue
 COPY qtconcurrentthreadengine.patch /opt/qt515/qtconcurrentthreadengine.patch
-RUN patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515/qtconcurrentthreadengine.patch && \
+sudo patch /opt/qt515/include/QtConcurrent/qtconcurrentthreadengine.h /opt/qt515/qtconcurrentthreadengine.patch && \
     rm /opt/qt515/qtconcurrentthreadengine.patch
 
 # Tell CMake to use vcpkg when looking for packages
 ENV VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
-USER 1027
 # Install vcpkg and required dependencies for yuzu
-RUN cd /home/yuzu &&\
+sudo cd /home/yuzu &&\
     git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
     cd vcpkg &&\
     ./bootstrap-vcpkg.sh &&\
