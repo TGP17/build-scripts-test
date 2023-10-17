@@ -15,6 +15,7 @@ sudo add-apt-repository -y ppa:savoury1/graphics
 sudo add-apt-repository -y ppa:theofficialgman/gpu-tools
 sudo add-apt-repository -y ppa:savoury1/multimedia
 sudo add-apt-repository -y ppa:git-core/ppa
+sudo add-apt-repository -y ppa:beineri/opt-qt-${QT_VER}-${UBUNTU_VER}
 
 sudo apt-get update
 sudo apt-get full-upgrade -y
@@ -60,12 +61,35 @@ sudo apt-get install -y \
     glslang-dev \
     glslang-tools \
     libhidapi-dev \
+    qt${QT_PKG_VER}base \
+    qt${QT_PKG_VER}tools \
+    qt${QT_PKG_VER}wayland \
+    qt${QT_PKG_VER}multimedia \
+    qt${QT_PKG_VER}x11extras \
     zip
     
 # Install Clang from apt.llvm.org
-wget https://apt.llvm.org/llvm.sh
-chmod +x llvm.sh
-sudo ./llvm.sh 15 all
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    echo "deb http://apt.llvm.org/${UBUNTU_VER}/ llvm-toolchain-${UBUNTU_VER}-${CLANG_VER} main" >> /etc/apt/sources.list && \
+    apt-get update -y && \
+    apt-get install --no-install-recommends -y \
+    clang-${CLANG_VER} \
+    lld-${CLANG_VER} \
+    llvm-${CLANG_VER} \
+    llvm-${CLANG_VER}-linker-tools && \
+    ln -s $(which clang-${CLANG_VER}) /usr/bin/clang && \
+    ln -s $(which clang++-${CLANG_VER}) /usr/bin/clang++ && \
+    dpkg-reconfigure ccache && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+
+# Install CMake from upstream
+cd /tmp && \
+    wget --no-verbose https://github.com/Kitware/CMake/releases/download/v${CMAKE_VER}/cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
+    tar xvf cmake-${CMAKE_VER}-linux-x86_64.tar.gz && \
+    sudo cp -rv cmake-${CMAKE_VER}-linux-x86_64/* /usr && \
+    rm -rf cmake-*
 
 # Install Boost from yuzu-emu/ext-linux-bin
 cd /tmp && \
