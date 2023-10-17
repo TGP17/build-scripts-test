@@ -1,4 +1,5 @@
 export BOOST_VER=1_79_0
+export CLANG_VER=15
 export CMAKE_VER=3.22.6
 export GCC_VER=12.2.0
 export GNU_BIN_VER=2.40
@@ -67,9 +68,20 @@ sudo apt-get update && \
     qt${QT_PKG_VER}x11extras
     
 # Install Clang from apt.llvm.org
-wget https://apt.llvm.org/llvm.sh
-chmod +x llvm.sh
-sudo ./llvm.sh 15 all
+    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    echo "deb http://apt.llvm.org/${UBUNTU_VER}/ llvm-toolchain-${UBUNTU_VER}-${CLANG_VER} main" >> /etc/apt/sources.list && \
+    apt-get update -y && \
+    apt-get install --no-install-recommends -y \
+    clang-${CLANG_VER} \
+    lld-${CLANG_VER} \
+    llvm-${CLANG_VER} \
+    llvm-${CLANG_VER}-linker-tools && \
+    ln -s $(which clang-${CLANG_VER}) /usr/bin/clang && \
+    ln -s $(which clang++-${CLANG_VER}) /usr/bin/clang++ && \
+    dpkg-reconfigure ccache && \
+    apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
 
 # Install CMake from upstream
 cd /tmp && \
