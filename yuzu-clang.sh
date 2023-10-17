@@ -97,7 +97,7 @@ cd /tmp && \
     sudo cp -rv gcc-${GCC_VER}/usr / && \
     rm -rf /tmp/gcc* && \
 # Use updated libstdc++ and libgcc_s on the container from GCC 11
-    rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
+    sudo rm -v /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
     ln -sv /usr/local/lib64/libstdc++.so.6.0.30 /usr/lib/x86_64-linux-gnu/libstdc++.so.6 && \
     ln -sv /usr/local/lib64/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1 && \
 # Help Clang find the updated GCC C++ version
@@ -121,8 +121,7 @@ export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 export VCPKG_TOOLCHAIN_FILE=/home/yuzu/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Install vcpkg and required dependencies for yuzu
-cd /home/yuzu &&\
-    git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
+git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
     cd vcpkg &&\
     ./bootstrap-vcpkg.sh &&\
     ./vcpkg install \
