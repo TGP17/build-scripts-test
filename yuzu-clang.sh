@@ -1,12 +1,15 @@
-sudo add-apt-repository -y ppa:savoury1/graphics
-sudo add-apt-repository -y ppa:savoury1/multimedia
+sudo add-apt-repository -y ppa:savoury1/build-tools
+sudo add-apt-repository -y ppa:savoury1/display
 sudo add-apt-repository -y ppa:savoury1/ffmpeg4
-sudo add-apt-repository -y ppa:git-core/ppa
+sudo add-apt-repository -y ppa:savoury1/gcc-defaults-11
+sudo add-apt-repository -y ppa:savoury1/graphics
 sudo add-apt-repository -y ppa:theofficialgman/gpu-tools
+sudo add-apt-repository -y ppa:savoury1/multimedia
+sudo add-apt-repository -y ppa:git-core/ppa
 
-sudo apt-get update && \
-   sudo apt-get full-upgrade -y && \
-   sudo apt-get install --no-install-recommends -y \
+sudo apt-get update
+sudo apt-get full-upgrade -y
+sudo apt-get install -y \
     apt-utils \
     ca-certificates \
     gnupg \
