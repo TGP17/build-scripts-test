@@ -66,6 +66,7 @@ sudo apt-get install -y \
     qt${QT_PKG_VER}wayland \
     qt${QT_PKG_VER}multimedia \
     qt${QT_PKG_VER}x11extras \
+    mold \
     zip
     
 # Install Clang from apt.llvm.org
@@ -114,8 +115,7 @@ cmake .. \
       -DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
       -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 \
       -DCMAKE_C_COMPILER=/usr/bin/clang-15 \
-      -DCMAKE_C_FLAGS="-fuse-ld=lld" \
-      -DCMAKE_CXX_FLAGS="-fuse-ld=lld" \
+      -DCMAKE_CXX_LINKER=/usr/bin/mold \
       -DCMAKE_INSTALL_PREFIX="/usr" \
       -DDISPLAY_VERSION=$1 \
       -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
