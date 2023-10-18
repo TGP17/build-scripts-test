@@ -24,5 +24,5 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-       name: citra-qt
-       path: ./yuzu-mainline/build/yuzu-x86_64.AppImage
+       name: yuzu
+       path: /home/runner/yuzu-mainline/build/yuzu-x86_64.AppImage
