@@ -172,3 +172,17 @@ cp exec-x86_64.so AppDir/usr/optional/exec.so
 cp AppRun.sh AppDir/AppRun
 cp --dereference /usr/lib/x86_64-linux-gnu/libstdc++.so.6 AppDir/usr/optional/libstdc++/libstdc++.so.6
 cp --dereference /lib/x86_64-linux-gnu/libgcc_s.so.1 AppDir/usr/optional/libgcc_s/libgcc_s.so.1
+
+# Build an AppImage
+wget -nc https://github.com/yuzu-emu/ext-linux-bin/raw/main/appimage/appimagetool-x86_64.AppImage
+chmod 755 appimagetool-x86_64.AppImage
+
+# if FUSE is not available, then fallback to extract and run
+if ! ./appimagetool-x86_64.AppImage --version; then
+    export APPIMAGE_EXTRACT_AND_RUN=1
+fi
+
+# Don't let AppImageLauncher ask to integrate EA
+echo "X-AppImage-Integrate=false" >> AppDir/org.yuzu_emu.yuzu.desktop
+# Build AppImage
+./appimagetool-x86_64.AppImage AppDir
