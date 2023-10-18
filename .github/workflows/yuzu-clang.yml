@@ -8,39 +8,21 @@ on:
 
 jobs:
   build:
-    name: yuzu-clang
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - type: clang
-            image: linux-fresh
-          - type: linux
-            image: linux-fresh
-    container:
-      image: yuzuemu/build-environments:${{ matrix.image }}
-      options: -u 1001
+    # The CMake configure and build commands are platform agnostic and should work equally
+    # well on Windows or Mac.  You can convert this to a matrix build if you need
+    # cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: ubuntu-20.04
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-          fetch-depth: 0
-      - name: Set up cache
-        uses: actions/cache@v3
-        id: ccache-restore
-        with:
-          path: ~/.ccache
-          key: ${{ runner.os }}-${{ matrix.type }}-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.type }}-
-      - name: Create ccache directory
-        if: steps.ccache-restore.outputs.cache-hit != 'true'
-        run: mkdir -p ~/.ccache
-      - name: Build
-        run: chmod a+x ./yuzu-clang.sh && ./yuzu-clang.sh
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.type }}
-          path: artifacts/
+    - uses: actions/checkout@v2
+    - name: Fetch submodules
+      run: git submodule update --init --recursive
+
+    - name: yuzu-clang.sh
+      run: chmod a+x ./yuzu-clang.sh && ./yuzu-clang.sh
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+       name: citra-qt
+       path: ./citra/build/bundle/citra-qt.AppImage
