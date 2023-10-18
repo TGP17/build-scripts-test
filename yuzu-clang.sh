@@ -184,5 +184,6 @@ fi
 
 # Don't let AppImageLauncher ask to integrate EA
 echo "X-AppImage-Integrate=false" >> AppDir/org.yuzu_emu.yuzu.desktop
+
 # Build AppImage
 ./appimagetool-x86_64.AppImage AppDir
