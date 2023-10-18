@@ -126,3 +126,49 @@ cmake .. \
       -GNinja
 
 ninja
+
+# Separate debug symbols from specified executables
+for EXE in yuzu; do
+    EXE_PATH="bin/$EXE"
+    # Copy debug symbols out
+    objcopy --only-keep-debug $EXE_PATH $EXE_PATH.debug
+    # Add debug link and strip debug symbols
+    objcopy -g --add-gnu-debuglink=$EXE_PATH.debug $EXE_PATH $EXE_PATH.out
+    # Overwrite original with stripped copy
+    mv $EXE_PATH.out $EXE_PATH
+done
+# Strip debug symbols from all executables
+find bin/ -type f -not -regex '.*.debug' -exec strip -g {} ';'
+
+DESTDIR="$PWD/AppDir" ninja install
+rm -vf AppDir/usr/bin/yuzu-cmd AppDir/usr/bin/yuzu-tester
+
+# Download tools needed to build an AppImage
+wget -nc https://raw.githubusercontent.com/yuzu-emu/ext-linux-bin/main/appimage/deploy-linux.sh
+wget -nc https://raw.githubusercontent.com/yuzu-emu/AppImageKit-checkrt/old/AppRun.sh
+wget -nc https://github.com/yuzu-emu/ext-linux-bin/raw/main/appimage/exec-x86_64.so
+# Set executable bit
+chmod 755 \
+    deploy-linux.sh \
+    AppRun.sh \
+    exec-x86_64.so \
+
+# Workaround for https://github.com/AppImage/AppImageKit/issues/828
+export APPIMAGE_EXTRACT_AND_RUN=1
+
+mkdir -p AppDir/usr/optional
+mkdir -p AppDir/usr/optional/libstdc++
+mkdir -p AppDir/usr/optional/libgcc_s
+
+# Deploy yuzu's needed dependencies
+DEPLOY_QT=1 ./deploy-linux.sh AppDir/usr/bin/yuzu AppDir
+
+# Workaround for libQt5MultimediaGstTools indirectly requiring libwayland-client and breaking Vulkan usage on end-user systems
+find AppDir -type f -regex '.*libwayland-client\.so.*' -delete -print
+
+# Workaround for building yuzu with GCC 10 but also trying to distribute it to Ubuntu 18.04 et al.
+# See https://github.com/darealshinji/AppImageKit-checkrt
+cp exec-x86_64.so AppDir/usr/optional/exec.so
+cp AppRun.sh AppDir/AppRun
+cp --dereference /usr/lib/x86_64-linux-gnu/libstdc++.so.6 AppDir/usr/optional/libstdc++/libstdc++.so.6
+cp --dereference /lib/x86_64-linux-gnu/libgcc_s.so.1 AppDir/usr/optional/libgcc_s/libgcc_s.so.1
