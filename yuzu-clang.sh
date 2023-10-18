@@ -104,6 +104,10 @@ git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
 # Tell CMake to use vcpkg when looking for packages
 export VCPKG_TOOLCHAIN_FILE=/tmp/vcpkg/scripts/buildsystems/vcpkg.cmake
 
+# Setup paths for Qt binaries
+export LD_LIBRARY_PATH=/opt/qt${QT_PKG_VER}/lib:${LD_LIBRARY_PATH}
+export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
+
 # Compile yuzu
 cd /home/runner
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
