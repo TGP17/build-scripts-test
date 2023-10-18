@@ -75,6 +75,7 @@ chmod +x llvm.sh
 sudo ./llvm.sh 15 all
 sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 150
 sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 150
+ln -s /etc/bin/ld.lld /usr/bin/ld
 
 # Install CMake from upstream
 cd /tmp && \
@@ -115,7 +116,6 @@ cmake .. \
       -DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
       -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 \
       -DCMAKE_C_COMPILER=/usr/bin/clang-15 \
-      -DCMAKE_CXX_LINKER=/usr/bin/mold \
       -DCMAKE_INSTALL_PREFIX="/usr" \
       -DDISPLAY_VERSION=$1 \
       -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
