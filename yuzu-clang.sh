@@ -105,6 +105,7 @@ git clone --depth 1 https://github.com/Microsoft/vcpkg.git &&\
 export VCPKG_TOOLCHAIN_FILE=/tmp/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Compile yuzu
+cd /home/runner
 git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
 cd yuzu-mainline
 mkdir build || true && cd build
