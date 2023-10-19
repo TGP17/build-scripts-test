@@ -110,8 +110,8 @@ export PATH=/opt/qt${QT_PKG_VER}/bin:${PATH}
 
 # Compile yuzu
 cd /home/runner
-git clone --recursive https://github.com/yuzu-emu/yuzu-mainline
-cd yuzu-mainline
+git clone --recursive https://github.com/TGP17/yuzu
+cd yuzu
 mkdir build || true && cd build
 cmake .. \
       -DBoost_USE_STATIC_LIBS=ON \
