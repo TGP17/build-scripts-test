@@ -10,6 +10,9 @@ sudo apt-get install -y \
     build-essential \
     libsdl2-dev \
     libssl-dev \
+    gcc-11 \
+    g++-11 \
+    cpp-11 \
     qt6-base-dev \
     qt6-base-private-dev \
     qt6-multimedia-dev \
@@ -49,8 +52,8 @@ cmake .. -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_C_COMPILER_LAUNCHER=ccache \
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
-    -DCMAKE_CXX_COMPILER=clang++ \
-    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++-15 \
+    -DCMAKE_C_COMPILER=clang-15 \
     -DCMAKE_LINKER=/etc/bin/ld.lld \
     -DCITRA_ENABLE_COMPATIBILITY_REPORTING=ON \
     -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
