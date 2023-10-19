@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
        name: yuzu
-       path: /home/runner/yuzu-mainline/build/yuzu-x86_64.AppImage
+       path: /home/runner/yuzu/build/yuzu-x86_64.AppImage
