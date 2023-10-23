@@ -44,8 +44,8 @@ wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
 sudo ./llvm.sh 15 all
 
-git clone --recursive https://github.com/citra-emu/citra-nightly
-cd citra-nightly
+git clone --recursive https://github.com/citra-emu/citra-canary
+cd citra-canary
 mkdir build
 cd build
 cmake .. -G Ninja \
