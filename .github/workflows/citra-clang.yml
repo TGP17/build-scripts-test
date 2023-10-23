@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
        name: citra-qt
-       path: ./citra-nightly/build/bundle/citra-qt.AppImage
+       path: ./citra-canary/build/bundle/citra-qt.AppImage
