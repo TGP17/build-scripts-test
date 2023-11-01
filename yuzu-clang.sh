@@ -61,8 +61,6 @@ sudo apt-get install -y \
     glslang-dev \
     glslang-tools \
     libhidapi-dev \
-    gcc-11
-    g++-11
     qt${QT_PKG_VER}base \
     qt${QT_PKG_VER}tools \
     qt${QT_PKG_VER}wayland \
@@ -118,7 +116,7 @@ mkdir build || true && cd build
 cmake .. \
       -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-      -DCMAKE_CXX_FLAGS="-march=x86-64-v3 -O3 -m64 -pipe" \
+      -DCMAKE_CXX_FLAGS="-march=x86-64-v2" \
       -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 \
       -DCMAKE_C_COMPILER=/usr/bin/clang-15 \
       -DCMAKE_LINKER=/etc/bin/ld.lld \
