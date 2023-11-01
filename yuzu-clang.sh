@@ -119,8 +119,9 @@ cmake .. \
       -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
       -DCMAKE_CXX_FLAGS="-march=x86-64-v3 -O3 -m64 -pipe" \
-      -DCMAKE_CXX_COMPILER=clang++-15 \
-      -DCMAKE_C_COMPILER=clang-15 \
+      -DCMAKE_CXX_COMPILER=/usr/bin/clang++-15 \
+      -DCMAKE_C_COMPILER=/usr/bin/clang-15 \
+      -DCMAKE_LINKER=/etc/bin/ld.lld \
       -DCMAKE_INSTALL_PREFIX="/usr" \
       -DDISPLAY_VERSION=$1 \
       -DENABLE_COMPATIBILITY_LIST_DOWNLOAD=ON \
